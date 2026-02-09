@@ -18,3 +18,11 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 - Créer une pédale en imprimant 3D
 
 [Lien vers un article sur les effets des pédales](https://www.hguitare.com/communaute/blog/materiel/pedales-effet-guitare)
+
+## Effets
+- Distorsion (saturation)
+- Pédale wah-wah (filtre)
+- Delay (echo)
+- Reverb
+- Harmoniser (modulation, harmoniques)
+- Noise Gate (filtre les sons trop forts ou trop faibles)
