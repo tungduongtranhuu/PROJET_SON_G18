@@ -7,3 +7,10 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 - Pouvoir brancher la guitare
 - Modifier le son
 - Pourvoir brancher l'ampli
+
+- Souder un port jack sur la Teensy
+    - mouiller l'éponge du fer à souder 
+    - Nettoyer la pointe tout le temps
+    - Débrancher le fer avant de partir
+
+- Brancher la guitare sur une entrée line in
