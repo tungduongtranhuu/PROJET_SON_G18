@@ -16,3 +16,5 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 - Brancher la guitare sur une entrée line in
 
 - Créer une pédale en imprimant 3D
+
+[Lien vers un article sur les effets des pédales](https://www.hguitare.com/communaute/blog/materiel/pedales-effet-guitare)
