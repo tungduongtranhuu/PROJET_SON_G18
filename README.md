@@ -14,3 +14,5 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
     - Débrancher le fer avant de partir
 
 - Brancher la guitare sur une entrée line in
+
+- Créer une pédale en imprimant 3D
