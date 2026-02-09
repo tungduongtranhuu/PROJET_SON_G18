@@ -7,3 +7,4 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 - Pouvoir brancher la guitare
 - Modifier le son
 - Pourvoir brancher l'ampli
+- Créer une pédale en imprimant 3D
