@@ -19,6 +19,8 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 
 [Lien vers un article sur les effets des pédales](https://www.hguitare.com/communaute/blog/materiel/pedales-effet-guitare)
 
+[Aide pour le poster scientifique](https://bu.univ-larochelle.fr/actualites/concevoir-un-poster-scientifique/)
+
 ## Effets
 - Distorsion (saturation)
 - Pédale wah-wah (filtre)
