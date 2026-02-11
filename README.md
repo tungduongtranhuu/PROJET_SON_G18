@@ -1,3 +1,4 @@
+
 # Projet SON : Pédale d'effet guitare
 ## Objectif
 Créer une pédale avec des effets réglables grâce à une interface graphique, déclenchés par un appui sur la pédale
@@ -28,3 +29,4 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 - Reverb
 - Harmoniser (modulation, harmoniques)
 - Noise Gate (filtre les sons trop forts ou trop faibles)
+=======
