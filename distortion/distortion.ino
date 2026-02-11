@@ -43,7 +43,7 @@ void setup() {
   sgtl5000_1.enable();
   sgtl5000_1.inputSelect(AUDIO_INPUT_LINEIN);
   sgtl5000_1.lineInLevel(12);   // thử 10–15 nếu tiếng nhỏ
-  sgtl5000_1.volume(0.7);
+  sgtl5000_1.volume(0.3);
 
   // Tăng độ phân giải ADC cho pot
   analogReadResolution(12);  // 0–4095
