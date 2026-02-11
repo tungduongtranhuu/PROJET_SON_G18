@@ -17,5 +17,9 @@ freq = ba.midikey2hz(midi);
 // Petite enveloppe
 env = ba.spulse(ba.tempo(60)/4, trig);
 
+// Interface commande
+d = hslider("duration", 0.25, 0, 3, 0.01) : si.smooth(0.999);
+f = hslider("feedback coef", 0.4, 0, 1, 0.01) : si.smooth(0.999);
+
 // Son
-process = os.osc(freq) * env * 0.3 : ef.echo(0.5, 0.25, 0.4); // echo(max echo duration in s, echo duration in s, feedback coefficient)
+process = os.osc(freq) * env * 0.3 : ef.echo(0.5, d, f);
