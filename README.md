@@ -28,5 +28,7 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 - Delay (echo)
 - Reverb
 - Harmoniser (modulation, harmoniques)
-- Noise Gate (filtre les sons trop forts ou trop faibles)
-=======
+- Noise Gate (filtre les sons trop forts ou trop faibles)      
+
+## Notes
+(`Ctrl` + $\Uparrow$ + `V` pour afficher la preview de cette page)
