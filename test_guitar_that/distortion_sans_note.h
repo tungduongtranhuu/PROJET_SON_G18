@@ -22,8 +22,8 @@
  
  ************************************************************************/
 
-#ifndef faust_distortion_h_
-#define faust_distortion_h_
+#ifndef faust_distortion_sans_note_h_
+#define faust_distortion_sans_note_h_
 
 #include <string>
 
@@ -41,12 +41,12 @@ class MidiUI;
 class teensy_midi;
 #endif
 
-class distortion : public AudioStream
+class distortion_sans_note : public AudioStream
 {
     public:
     
-        distortion();
-        ~distortion();
+        distortion_sans_note();
+        ~distortion_sans_note();
     
         virtual void update(void);
     
