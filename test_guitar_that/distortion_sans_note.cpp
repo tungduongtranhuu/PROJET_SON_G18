@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------
-name: "distortion"
+name: "distortion_sans_note"
 Code generated with Faust 2.81.10 (https://faust.grame.fr)
 Compilation options: -a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -uim -single -ftz 0
 ------------------------------------------------------------ */
@@ -44,7 +44,7 @@ Compilation options: -a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -c
 
 #include <string.h> // for memset
 
-#include "distortion.h"
+#include "distortion_sans_note.h"
 
 // IMPORTANT: in order for MapUI to work, the teensy linker must be g++
 /************************** BEGIN MapUI.h ******************************
@@ -10311,6 +10311,7 @@ struct dsp_poly_factory : public dsp_factory {
 #define FAUSTFLOAT float
 #endif 
 
+/* link with : "" */
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -10350,56 +10351,135 @@ struct mydsp : public dsp {
 	float fConst9;
 	float fConst10;
 	float fConst11;
-	float fVec0[2];
-	float fRec5[2];
 	float fConst12;
 	float fConst13;
 	float fConst14;
-	float fRec4[2];
-	float fRec3[3];
 	float fConst15;
-	FAUSTFLOAT fHslider0;
-	float fVec1[2];
 	float fConst16;
 	float fConst17;
 	float fConst18;
-	float fRec2[2];
-	FAUSTFLOAT fHslider1;
 	float fConst19;
-	float fRec1[2];
-	float fRec0[3];
+	FAUSTFLOAT fHslider0;
+	float fConst20;
+	FAUSTFLOAT fHslider1;
+	float fConst21;
+	float fConst22;
+	float fConst23;
+	float fConst24;
+	float fConst25;
+	float fConst26;
+	float fConst27;
+	float fConst28;
+	float fConst29;
+	float fConst30;
+	float fConst31;
+	float fConst32;
+	float fConst33;
+	float fVec0[2];
+	float fRec15[2];
+	float fConst34;
+	float fConst35;
+	float fConst36;
+	float fRec14[2];
+	float fConst37;
+	float fConst38;
+	float fRec13[2];
+	float fConst39;
+	float fRec12[2];
+	float fConst40;
+	float fConst41;
+	float fRec11[2];
+	float fConst42;
+	float fRec10[2];
+	float fVec1[2];
+	float fConst43;
+	float fRec9[2];
+	float fRec8[3];
+	float fConst44;
+	float fRec17[2];
+	float fRec16[3];
+	float fRec7[3];
+	float fRec6[3];
+	float fRec5[3];
+	float fVec2[2];
+	float fConst45;
+	float fConst46;
+	float fConst47;
+	float fConst48;
+	float fConst49;
+	float fRec4[2];
+	float fRec3[3];
+	float fVec3[2];
+	float fConst50;
+	float fConst51;
+	float fConst52;
+	float fRec2[2];
+	float fRec1[3];
+	float fConst53;
+	float fRec19[2];
+	float fRec18[3];
+	float fConst54;
+	FAUSTFLOAT fHslider2;
+	float fVec4[2];
+	float fRec0[2];
 	
 	mydsp() {
 	}
 	
 	void metadata(Meta* m) { 
+		m->declare("analyzers.lib/amp_follower_ar:author", "Jonatan Liljedahl, revised by Romain Michon");
+		m->declare("analyzers.lib/name", "Faust Analyzer Library");
+		m->declare("analyzers.lib/version", "1.3.0");
+		m->declare("basics.lib/name", "Faust Basic Element Library");
+		m->declare("basics.lib/version", "1.22.0");
 		m->declare("compile_options", "-a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -uim -single -ftz 0");
+		m->declare("compressors.lib/compression_gain_mono:author", "Julius O. Smith III");
+		m->declare("compressors.lib/compression_gain_mono:copyright", "Copyright (C) 2014-2020 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("compressors.lib/compression_gain_mono:license", "MIT-style STK-4.3 license");
+		m->declare("compressors.lib/compressor_lad_mono:author", "Julius O. Smith III");
+		m->declare("compressors.lib/compressor_lad_mono:copyright", "Copyright (C) 2014-2020 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("compressors.lib/compressor_lad_mono:license", "MIT-style STK-4.3 license");
+		m->declare("compressors.lib/compressor_mono:author", "Julius O. Smith III");
+		m->declare("compressors.lib/compressor_mono:copyright", "Copyright (C) 2014-2020 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("compressors.lib/compressor_mono:license", "MIT-style STK-4.3 license");
 		m->declare("compressors.lib/name", "Faust Compressor Effect Library");
 		m->declare("compressors.lib/version", "1.6.0");
-		m->declare("filename", "distortion.dsp");
+		m->declare("filename", "distortion_sans_note.dsp");
 		m->declare("filters.lib/dcblocker:author", "Julius O. Smith III");
 		m->declare("filters.lib/dcblocker:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/dcblocker:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/filterbank:author", "Julius O. Smith III");
+		m->declare("filters.lib/filterbank:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/filterbank:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/fir:author", "Julius O. Smith III");
 		m->declare("filters.lib/fir:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/fir:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/highpass:author", "Julius O. Smith III");
 		m->declare("filters.lib/highpass:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/highshelf:author", "Julius O. Smith III");
+		m->declare("filters.lib/highshelf:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/highshelf:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/iir:author", "Julius O. Smith III");
 		m->declare("filters.lib/iir:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/iir:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/lowpass0_highpass1", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/low_shelf:author", "Julius O. Smith III");
+		m->declare("filters.lib/low_shelf:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/low_shelf:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/lowpass0_highpass1", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/lowpass0_highpass1:author", "Julius O. Smith III");
 		m->declare("filters.lib/lowpass:author", "Julius O. Smith III");
 		m->declare("filters.lib/lowpass:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/lowpass:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/lowshelf:author", "Julius O. Smith III");
+		m->declare("filters.lib/lowshelf:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/lowshelf:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/name", "Faust Filters Library");
+		m->declare("filters.lib/peak_eq:author", "Julius O. Smith III");
+		m->declare("filters.lib/peak_eq:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/peak_eq:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/pole:author", "Julius O. Smith III");
 		m->declare("filters.lib/pole:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/pole:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/resonbp:author", "Julius O. Smith III");
-		m->declare("filters.lib/resonbp:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
-		m->declare("filters.lib/resonbp:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/tf1:author", "Julius O. Smith III");
 		m->declare("filters.lib/tf1:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/tf1:license", "MIT-style STK-4.3 license");
@@ -10421,16 +10501,20 @@ struct mydsp : public dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.9.0");
-		m->declare("name", "distortion");
+		m->declare("name", "distortion_sans_note");
 		m->declare("platform.lib/name", "Generic Platform Library");
 		m->declare("platform.lib/version", "1.3.0");
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/onePoleSwitching:author", "Jonatan Liljedahl, revised by Dario Sanfilippo");
+		m->declare("signals.lib/onePoleSwitching:licence", "STK-4.3");
+		m->declare("signals.lib/version", "1.6.0");
 	}
 
 	virtual int getNumInputs() {
 		return 1;
 	}
 	virtual int getNumOutputs() {
-		return 1;
+		return 2;
 	}
 	
 	static void classInit(int sample_rate) {
@@ -10439,30 +10523,66 @@ struct mydsp : public dsp {
 	virtual void instanceConstants(int sample_rate) {
 		fSampleRate = sample_rate;
 		fConst0 = std::min<float>(1.92e+05f, std::max<float>(1.0f, static_cast<float>(fSampleRate)));
-		fConst1 = std::tan(11938.052f / fConst0);
-		fConst2 = 2.0f * (1.0f - 1.0f / mydsp_faustpower2_f(fConst1));
-		fConst3 = 1.0f / fConst1;
-		fConst4 = (fConst3 + -1.4142135f) / fConst1 + 1.0f;
-		fConst5 = 1.0f / ((fConst3 + 1.4142135f) / fConst1 + 1.0f);
-		fConst6 = std::tan(2356.1946f / fConst0);
-		fConst7 = 2.0f * (1.0f - 1.0f / mydsp_faustpower2_f(fConst6));
-		fConst8 = 1.0f / fConst6;
-		fConst9 = (fConst8 + -1.25f) / fConst6 + 1.0f;
-		fConst10 = (fConst8 + 1.25f) / fConst6 + 1.0f;
-		fConst11 = 1.0f / fConst10;
-		fConst12 = 1.0f / std::tan(628.31854f / fConst0);
-		fConst13 = 1.0f - fConst12;
-		fConst14 = 1.0f / (fConst12 + 1.0f);
-		fConst15 = 0.4f / (fConst6 * fConst10);
-		fConst16 = 1.0f / std::tan(376.99112f / fConst0);
-		fConst17 = 1.0f - fConst16;
-		fConst18 = 1.0f / (fConst16 + 1.0f);
-		fConst19 = 3.1415927f / fConst0;
+		fConst1 = std::tan(14137.167f / fConst0);
+		fConst2 = mydsp_faustpower2_f(fConst1);
+		fConst3 = 2.0f * (1.0f - 1.0f / fConst2);
+		fConst4 = 1.0f / fConst1;
+		fConst5 = (fConst4 + -1.0f) / fConst1 + 1.0f;
+		fConst6 = (fConst4 + 1.0f) / fConst1 + 1.0f;
+		fConst7 = 1.0f / fConst6;
+		fConst8 = std::tan(18849.557f / fConst0);
+		fConst9 = 2.0f * (1.0f - 1.0f / mydsp_faustpower2_f(fConst8));
+		fConst10 = 1.0f / fConst8;
+		fConst11 = (fConst10 + -1.4142135f) / fConst8 + 1.0f;
+		fConst12 = (fConst10 + 1.4142135f) / fConst8 + 1.0f;
+		fConst13 = 1.0f / fConst12;
+		fConst14 = std::tan(15079.645f / fConst0);
+		fConst15 = 2.0f * (1.0f - 1.0f / mydsp_faustpower2_f(fConst14));
+		fConst16 = 1.0f / fConst14;
+		fConst17 = (fConst16 + -1.4142135f) / fConst14 + 1.0f;
+		fConst18 = (fConst16 + 1.4142135f) / fConst14 + 1.0f;
+		fConst19 = 1.0f / fConst18;
+		fConst20 = 3.1415927f / fConst0;
+		fConst21 = 3.1415927f / (fConst0 * std::sin(4272.566f / fConst0));
+		fConst22 = std::tan(2136.283f / fConst0);
+		fConst23 = 1.0f / fConst22;
+		fConst24 = 2.0f * (1.0f - 1.0f / mydsp_faustpower2_f(fConst22));
+		fConst25 = std::tan(471.2389f / fConst0);
+		fConst26 = 1.0f / mydsp_faustpower2_f(fConst25);
+		fConst27 = 2.0f * (1.0f - fConst26);
+		fConst28 = 1.0f / fConst25;
+		fConst29 = (fConst28 + -1.0f) / fConst25 + 1.0f;
+		fConst30 = 1.0f / ((fConst28 + 1.0f) / fConst25 + 1.0f);
+		fConst31 = 1.0f - fConst28;
+		fConst32 = std::exp(-(4e+02f / fConst0));
+		fConst33 = std::exp(-(666.6667f / fConst0));
+		fConst34 = 1.0f / std::tan(235.61945f / fConst0);
+		fConst35 = 1.0f - fConst34;
+		fConst36 = 1.0f / (fConst34 + 1.0f);
+		fConst37 = std::exp(-(14.285714f / fConst0));
+		fConst38 = std::exp(-(333.33334f / fConst0));
+		fConst39 = 8388607.0f * (1.0f - fConst33);
+		fConst40 = std::exp(-(1e+01f / fConst0));
+		fConst41 = std::exp(-(2e+02f / fConst0));
+		fConst42 = 8388607.0f * (1.0f - fConst32);
+		fConst43 = 1.0f / (fConst28 + 1.0f);
+		fConst44 = 0.765f / fConst25;
+		fConst45 = std::tan(251.32741f / fConst0);
+		fConst46 = 1.0f / (fConst45 * fConst18);
+		fConst47 = 1.0f / fConst45;
+		fConst48 = 1.0f - fConst47;
+		fConst49 = 1.0f / (fConst47 + 1.0f);
+		fConst50 = 1.0f / (fConst1 * fConst12);
+		fConst51 = 1.0f - fConst4;
+		fConst52 = 1.0f / (fConst4 + 1.0f);
+		fConst53 = 0.7943282f / fConst2;
+		fConst54 = 0.1f / fConst6;
 	}
 	
 	virtual void instanceResetUserInterface() {
-		fHslider0 = static_cast<FAUSTFLOAT>(12.0f);
-		fHslider1 = static_cast<FAUSTFLOAT>(3e+03f);
+		fHslider0 = static_cast<FAUSTFLOAT>(4e+03f);
+		fHslider1 = static_cast<FAUSTFLOAT>(15.0f);
+		fHslider2 = static_cast<FAUSTFLOAT>(0.7f);
 	}
 	
 	virtual void instanceClear() {
@@ -10470,25 +10590,76 @@ struct mydsp : public dsp {
 			fVec0[l0] = 0.0f;
 		}
 		for (int l1 = 0; l1 < 2; l1 = l1 + 1) {
-			fRec5[l1] = 0.0f;
+			fRec15[l1] = 0.0f;
 		}
 		for (int l2 = 0; l2 < 2; l2 = l2 + 1) {
-			fRec4[l2] = 0.0f;
+			fRec14[l2] = 0.0f;
 		}
-		for (int l3 = 0; l3 < 3; l3 = l3 + 1) {
-			fRec3[l3] = 0.0f;
+		for (int l3 = 0; l3 < 2; l3 = l3 + 1) {
+			fRec13[l3] = 0.0f;
 		}
 		for (int l4 = 0; l4 < 2; l4 = l4 + 1) {
-			fVec1[l4] = 0.0f;
+			fRec12[l4] = 0.0f;
 		}
 		for (int l5 = 0; l5 < 2; l5 = l5 + 1) {
-			fRec2[l5] = 0.0f;
+			fRec11[l5] = 0.0f;
 		}
 		for (int l6 = 0; l6 < 2; l6 = l6 + 1) {
-			fRec1[l6] = 0.0f;
+			fRec10[l6] = 0.0f;
 		}
-		for (int l7 = 0; l7 < 3; l7 = l7 + 1) {
-			fRec0[l7] = 0.0f;
+		for (int l7 = 0; l7 < 2; l7 = l7 + 1) {
+			fVec1[l7] = 0.0f;
+		}
+		for (int l8 = 0; l8 < 2; l8 = l8 + 1) {
+			fRec9[l8] = 0.0f;
+		}
+		for (int l9 = 0; l9 < 3; l9 = l9 + 1) {
+			fRec8[l9] = 0.0f;
+		}
+		for (int l10 = 0; l10 < 2; l10 = l10 + 1) {
+			fRec17[l10] = 0.0f;
+		}
+		for (int l11 = 0; l11 < 3; l11 = l11 + 1) {
+			fRec16[l11] = 0.0f;
+		}
+		for (int l12 = 0; l12 < 3; l12 = l12 + 1) {
+			fRec7[l12] = 0.0f;
+		}
+		for (int l13 = 0; l13 < 3; l13 = l13 + 1) {
+			fRec6[l13] = 0.0f;
+		}
+		for (int l14 = 0; l14 < 3; l14 = l14 + 1) {
+			fRec5[l14] = 0.0f;
+		}
+		for (int l15 = 0; l15 < 2; l15 = l15 + 1) {
+			fVec2[l15] = 0.0f;
+		}
+		for (int l16 = 0; l16 < 2; l16 = l16 + 1) {
+			fRec4[l16] = 0.0f;
+		}
+		for (int l17 = 0; l17 < 3; l17 = l17 + 1) {
+			fRec3[l17] = 0.0f;
+		}
+		for (int l18 = 0; l18 < 2; l18 = l18 + 1) {
+			fVec3[l18] = 0.0f;
+		}
+		for (int l19 = 0; l19 < 2; l19 = l19 + 1) {
+			fRec2[l19] = 0.0f;
+		}
+		for (int l20 = 0; l20 < 3; l20 = l20 + 1) {
+			fRec1[l20] = 0.0f;
+		}
+		for (int l21 = 0; l21 < 2; l21 = l21 + 1) {
+			fRec19[l21] = 0.0f;
+		}
+		for (int l22 = 0; l22 < 3; l22 = l22 + 1) {
+			fRec18[l22] = 0.0f;
+		}
+		for (int l23 = 0; l23 < 2; l23 = l23 + 1) {
+			fVec4[l23] = 0.0f;
+		}
+		for (int l24 = 0; l24 < 2; l24 = l24 + 1) {
+			fRec0[l24] = 0.0f;
 		}
 	}
 	
@@ -10512,44 +10683,116 @@ struct mydsp : public dsp {
 	}
 	
 	virtual void buildUserInterface(UI* ui_interface) {
-		ui_interface->openVerticalBox("distortion");
-		ui_interface->addHorizontalSlider("Drive", &fHslider0, FAUSTFLOAT(12.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(4e+01f), FAUSTFLOAT(0.1f));
-		ui_interface->addHorizontalSlider("Tone", &fHslider1, FAUSTFLOAT(3e+03f), FAUSTFLOAT(8e+02f), FAUSTFLOAT(6e+03f), FAUSTFLOAT(1.0f));
+		ui_interface->openVerticalBox("distortion_sans_note");
+		ui_interface->addHorizontalSlider("Drive", &fHslider1, FAUSTFLOAT(15.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(5e+01f), FAUSTFLOAT(0.1f));
+		ui_interface->addHorizontalSlider("Tone", &fHslider0, FAUSTFLOAT(4e+03f), FAUSTFLOAT(1.5e+03f), FAUSTFLOAT(8e+03f), FAUSTFLOAT(1e+01f));
+		ui_interface->addHorizontalSlider("Volume", &fHslider2, FAUSTFLOAT(0.7f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
 		ui_interface->closeBox();
 	}
 	
 	virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
 		FAUSTFLOAT* input0 = inputs[0];
 		FAUSTFLOAT* output0 = outputs[0];
+		FAUSTFLOAT* output1 = outputs[1];
 		float fSlow0 = static_cast<float>(fHslider0);
-		float fSlow1 = 0.33333334f * mydsp_faustpower2_f(fSlow0);
-		float fSlow2 = 1.0f / std::tan(fConst19 * static_cast<float>(fHslider1));
-		float fSlow3 = 1.0f - fSlow2;
-		float fSlow4 = 1.0f / (fSlow2 + 1.0f);
+		float fSlow1 = std::tan(fConst20 * ((fSlow0 > 1.8e+03f) ? fSlow0 : 1.8e+03f));
+		float fSlow2 = 1.0f / fSlow1;
+		float fSlow3 = (fSlow2 + 1.4142135f) / fSlow1 + 1.0f;
+		float fSlow4 = 1.0f - 1.0f / mydsp_faustpower2_f(fSlow1);
+		float fSlow5 = (fSlow2 + -1.4142135f) / fSlow1 + 1.0f;
+		float fSlow6 = static_cast<float>(fHslider1);
+		float fSlow7 = -0.14f * fSlow6;
+		float fSlow8 = ((fSlow7 > -2.5f) ? fSlow7 : -2.5f);
+		int iSlow9 = fSlow8 > 0.0f;
+		float fSlow10 = fConst21 * std::pow(1e+01f, 0.05f * std::fabs(fSlow8));
+		float fSlow11 = ((iSlow9) ? fConst21 : fSlow10);
+		float fSlow12 = fConst23 * (fConst23 + fSlow11) + 1.0f;
+		float fSlow13 = ((iSlow9) ? fSlow10 : fConst21);
+		float fSlow14 = fConst23 * (fConst23 - fSlow13) + 1.0f;
+		float fSlow15 = fConst23 * (fConst23 - fSlow11) + 1.0f;
+		float fSlow16 = 0.12f * fSlow6;
+		float fSlow17 = ((fSlow16 > 0.9f) ? fSlow16 : 0.9f);
+		float fSlow18 = 0.25f * fSlow6 + 0.35f;
+		float fSlow19 = 0.266f * fSlow6 * fSlow18;
+		float fSlow20 = fConst23 * (fConst23 + fSlow13) + 1.0f;
+		float fSlow21 = 1.2f * static_cast<float>(fHslider2);
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
-			float fTemp0 = static_cast<float>(input0[i0]);
-			fVec0[0] = fTemp0;
-			fRec5[0] = fTemp0 + 0.995f * fRec5[1] - fVec0[1];
-			fRec4[0] = -(fConst14 * (fConst13 * fRec4[1] - fConst12 * (fRec5[0] - fRec5[1])));
-			fRec3[0] = fRec4[0] - fConst11 * (fConst9 * fRec3[2] + fConst7 * fRec3[1]);
-			float fTemp1 = fRec4[0] + fConst15 * (fRec3[0] - fRec3[2]) + 0.05f;
-			float fTemp2 = std::sqrt(mydsp_faustpower2_f(std::fabs(fSlow0 * fTemp1)) + 1.0f);
-			float fTemp3 = fSlow0 * (fTemp1 * (0.3f * (1.0f - fSlow1 * (mydsp_faustpower2_f(fTemp1) / mydsp_faustpower2_f(fTemp2))) + 0.7f) / fTemp2);
-			fVec1[0] = fTemp3;
-			fRec2[0] = -(fConst18 * (fConst17 * fRec2[1] - fConst16 * (fTemp3 - fVec1[1])));
-			fRec1[0] = -(fSlow4 * (fSlow3 * fRec1[1] - (fRec2[0] + fRec2[1])));
-			fRec0[0] = fRec1[0] - fConst5 * (fConst4 * fRec0[2] + fConst2 * fRec0[1]);
-			float fTemp4 = fRec0[2] + fRec0[0] + 2.0f * fRec0[1];
-			output0[i0] = static_cast<FAUSTFLOAT>(fConst5 * fTemp4 * static_cast<float>(std::fabs(fConst5 * fTemp4) > 0.0f));
+			float fTemp0 = fConst24 * fRec7[1];
+			float fTemp1 = static_cast<float>(input0[i0]);
+			fVec0[0] = fTemp1;
+			fRec15[0] = fTemp1 + 0.995f * fRec15[1] - fVec0[1];
+			fRec14[0] = -(fConst36 * (fConst35 * fRec14[1] - fConst34 * (fRec15[0] - fRec15[1])));
+			float fTemp2 = std::fabs(fRec14[0]);
+			float fTemp3 = ((fTemp2 > fRec13[1]) ? fConst38 : fConst37);
+			fRec13[0] = fTemp2 * (1.0f - fTemp3) + fRec13[1] * fTemp3;
+			fRec12[0] = fConst39 * std::max<float>(2e+01f * std::log10(std::max<float>(1.1754944e-38f, fRec13[0])) + -3.0f, 0.0f) + fConst33 * fRec12[1];
+			float fTemp4 = fRec14[0] * std::pow(1e+01f, 0.05f * fRec12[0]);
+			float fTemp5 = std::pow(std::fabs(fSlow18 * fTemp4), 1.5f) + 1.0f;
+			float fTemp6 = fSlow19 * (fTemp4 / fTemp5);
+			float fTemp7 = std::fabs(fTemp6);
+			float fTemp8 = tanhf(2.772f * ((fTemp6 > 0.0f) ? fSlow19 * (fTemp4 / (fTemp5 * (std::pow(fTemp7, 2.1f) + 1.0f))) : fSlow19 * (fTemp4 / (fTemp5 * (std::pow(fTemp7, 2.8f) + 1.0f)))) * fSlow17);
+			float fTemp9 = std::fabs(0.765f * fTemp8);
+			float fTemp10 = ((fTemp9 > fRec11[1]) ? fConst41 : fConst40);
+			fRec11[0] = fTemp9 * (1.0f - fTemp10) + fRec11[1] * fTemp10;
+			fRec10[0] = fConst42 * std::max<float>(2e+01f * std::log10(std::max<float>(1.1754944e-38f, fRec11[0])) + -2.0f, 0.0f) + fConst32 * fRec10[1];
+			float fTemp11 = fTemp8 * std::pow(1e+01f, 0.05f * fRec10[0]);
+			fVec1[0] = fTemp11;
+			fRec9[0] = fConst43 * (0.765f * (fTemp11 + fVec1[1]) - fConst31 * fRec9[1]);
+			fRec8[0] = fRec9[0] - fConst30 * (fConst29 * fRec8[2] + fConst27 * fRec8[1]);
+			fRec17[0] = fConst43 * (fConst44 * (fTemp11 - fVec1[1]) - fConst31 * fRec17[1]);
+			fRec16[0] = fRec17[0] - fConst30 * (fConst29 * fRec16[2] + fConst27 * fRec16[1]);
+			fRec7[0] = fConst30 * (fConst26 * (fRec16[2] + (fRec16[0] - 2.0f * fRec16[1])) + 1.4125376f * (fRec8[2] + fRec8[0] + 2.0f * fRec8[1])) - (fRec7[2] * fSlow15 + fTemp0) / fSlow12;
+			fRec6[0] = (fTemp0 + fRec7[0] * fSlow20 + fRec7[2] * fSlow14) / fSlow12 - (fRec6[2] * fSlow5 + 2.0f * fRec6[1] * fSlow4) / fSlow3;
+			fRec5[0] = (fRec6[2] + fRec6[0] + 2.0f * fRec6[1]) / fSlow3 - fConst19 * (fConst17 * fRec5[2] + fConst15 * fRec5[1]);
+			float fTemp12 = fRec5[2] + fRec5[0] + 2.0f * fRec5[1];
+			fVec2[0] = fTemp12;
+			fRec4[0] = -(fConst49 * (fConst48 * fRec4[1] - fConst46 * (fTemp12 - fVec2[1])));
+			fRec3[0] = fRec4[0] - fConst13 * (fConst11 * fRec3[2] + fConst9 * fRec3[1]);
+			float fTemp13 = fRec3[2] + fRec3[0] + 2.0f * fRec3[1];
+			fVec3[0] = fTemp13;
+			fRec2[0] = -(fConst52 * (fConst51 * fRec2[1] - fConst50 * (fTemp13 - fVec3[1])));
+			fRec1[0] = fRec2[0] - fConst7 * (fConst5 * fRec1[2] + fConst3 * fRec1[1]);
+			fRec19[0] = -(fConst52 * (fConst51 * fRec19[1] - fConst13 * (fTemp13 + fVec3[1])));
+			fRec18[0] = fRec19[0] - fConst7 * (fConst5 * fRec18[2] + fConst3 * fRec18[1]);
+			float fTemp14 = fRec18[2] + fRec18[0] + 2.0f * fRec18[1] + fConst53 * (fRec1[2] + (fRec1[0] - 2.0f * fRec1[1]));
+			float fTemp15 = fConst7 * fTemp14;
+			float fTemp16 = fSlow21 * ((std::fabs(fTemp15) > 0.01f) ? fTemp15 : fConst54 * fTemp14);
+			fVec4[0] = fTemp16;
+			fRec0[0] = 0.995f * fRec0[1] + fTemp16 - fVec4[1];
+			output0[i0] = static_cast<FAUSTFLOAT>(fRec0[0]);
+			output1[i0] = static_cast<FAUSTFLOAT>(fRec0[0]);
 			fVec0[1] = fVec0[0];
+			fRec15[1] = fRec15[0];
+			fRec14[1] = fRec14[0];
+			fRec13[1] = fRec13[0];
+			fRec12[1] = fRec12[0];
+			fRec11[1] = fRec11[0];
+			fRec10[1] = fRec10[0];
+			fVec1[1] = fVec1[0];
+			fRec9[1] = fRec9[0];
+			fRec8[2] = fRec8[1];
+			fRec8[1] = fRec8[0];
+			fRec17[1] = fRec17[0];
+			fRec16[2] = fRec16[1];
+			fRec16[1] = fRec16[0];
+			fRec7[2] = fRec7[1];
+			fRec7[1] = fRec7[0];
+			fRec6[2] = fRec6[1];
+			fRec6[1] = fRec6[0];
+			fRec5[2] = fRec5[1];
 			fRec5[1] = fRec5[0];
+			fVec2[1] = fVec2[0];
 			fRec4[1] = fRec4[0];
 			fRec3[2] = fRec3[1];
 			fRec3[1] = fRec3[0];
-			fVec1[1] = fVec1[0];
+			fVec3[1] = fVec3[0];
 			fRec2[1] = fRec2[0];
+			fRec1[2] = fRec1[1];
 			fRec1[1] = fRec1[0];
-			fRec0[2] = fRec0[1];
+			fRec19[1] = fRec19[0];
+			fRec18[2] = fRec18[1];
+			fRec18[1] = fRec18[0];
+			fVec4[1] = fVec4[0];
 			fRec0[1] = fRec0[0];
 		}
 	}
@@ -10558,20 +10801,22 @@ struct mydsp : public dsp {
 
 #ifdef FAUST_UIMACROS
 	
-	#define FAUST_FILE_NAME "distortion.dsp"
+	#define FAUST_FILE_NAME "distortion_sans_note.dsp"
 	#define FAUST_CLASS_NAME "mydsp"
 	#define FAUST_COMPILATION_OPIONS "-a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -uim -single -ftz 0"
 	#define FAUST_INPUTS 1
-	#define FAUST_OUTPUTS 1
-	#define FAUST_ACTIVES 2
+	#define FAUST_OUTPUTS 2
+	#define FAUST_ACTIVES 3
 	#define FAUST_PASSIVES 0
 
-	FAUST_ADDHORIZONTALSLIDER("Drive", fHslider0, 12.0f, 1.0f, 4e+01f, 0.1f);
-	FAUST_ADDHORIZONTALSLIDER("Tone", fHslider1, 3e+03f, 8e+02f, 6e+03f, 1.0f);
+	FAUST_ADDHORIZONTALSLIDER("Drive", fHslider1, 15.0f, 1.0f, 5e+01f, 0.1f);
+	FAUST_ADDHORIZONTALSLIDER("Tone", fHslider0, 4e+03f, 1.5e+03f, 8e+03f, 1e+01f);
+	FAUST_ADDHORIZONTALSLIDER("Volume", fHslider2, 0.7f, 0.0f, 1.0f, 0.01f);
 
 	#define FAUST_LIST_ACTIVES(p) \
-		p(HORIZONTALSLIDER, Drive, "Drive", fHslider0, 12.0f, 1.0f, 4e+01f, 0.1f) \
-		p(HORIZONTALSLIDER, Tone, "Tone", fHslider1, 3e+03f, 8e+02f, 6e+03f, 1.0f) \
+		p(HORIZONTALSLIDER, Drive, "Drive", fHslider1, 15.0f, 1.0f, 5e+01f, 0.1f) \
+		p(HORIZONTALSLIDER, Tone, "Tone", fHslider0, 4e+03f, 1.5e+03f, 8e+03f, 1e+01f) \
+		p(HORIZONTALSLIDER, Volume, "Volume", fHslider2, 0.7f, 0.0f, 1.0f, 0.01f) \
 
 	#define FAUST_LIST_PASSIVES(p) \
 
@@ -10593,7 +10838,7 @@ std::list<GUI*> GUI::fGuiList;
 ztimedmap GUI::gTimedZoneMap;
 #endif
 
-distortion::distortion() : AudioStream(FAUST_INPUTS, new audio_block_t*[FAUST_INPUTS])
+distortion_sans_note::distortion_sans_note() : AudioStream(FAUST_INPUTS, new audio_block_t*[FAUST_INPUTS])
 {
 #ifdef NVOICES
     int nvoices = NVOICES;
@@ -10635,7 +10880,7 @@ distortion::distortion() : AudioStream(FAUST_INPUTS, new audio_block_t*[FAUST_IN
 #endif
 }
 
-distortion::~distortion()
+distortion_sans_note::~distortion_sans_note()
 {
     delete fDSP;
     delete fUI;
@@ -10654,7 +10899,7 @@ distortion::~distortion()
 }
 
 template <int INPUTS, int OUTPUTS>
-void distortion::updateImp(void)
+void distortion_sans_note::updateImp(void)
 {
 #if MIDICTRL
     // Process the MIDI messages received by the Teensy
@@ -10695,14 +10940,14 @@ void distortion::updateImp(void)
     }
 }
 
-void distortion::update(void) { updateImp<FAUST_INPUTS, FAUST_OUTPUTS>(); }
+void distortion_sans_note::update(void) { updateImp<FAUST_INPUTS, FAUST_OUTPUTS>(); }
 
-void distortion::setParamValue(const std::string& path, float value)
+void distortion_sans_note::setParamValue(const std::string& path, float value)
 {
     fUI->setParamValue(path, value);
 }
 
-float distortion::getParamValue(const std::string& path)
+float distortion_sans_note::getParamValue(const std::string& path)
 {
     return fUI->getParamValue(path);
 }
