@@ -10311,6 +10311,7 @@ struct dsp_poly_factory : public dsp_factory {
 #define FAUSTFLOAT float
 #endif 
 
+/* link with : "" */
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -10337,44 +10338,58 @@ static float mydsp_faustpower2_f(float value) {
 
 struct mydsp : public dsp {
 	
-	int IOTA0;
 	int fSampleRate;
 	float fConst0;
 	float fConst1;
+	float fConst2;
+	float fConst3;
+	float fConst4;
+	float fConst5;
+	float fConst6;
+	float fRec1[3];
+	float fConst7;
 	FAUSTFLOAT fHslider0;
-	float fRec1[2];
-	FAUSTFLOAT fHslider1;
 	float fRec2[2];
-	FAUSTFLOAT fHslider2;
+	int IOTA0;
+	float fVec0[262144];
+	FAUSTFLOAT fHslider1;
 	float fRec3[2];
-	float fRec0[65536];
+	float fRec0[2];
+	FAUSTFLOAT fHslider2;
+	float fRec4[2];
 	
 	mydsp() {
 	}
 	
 	void metadata(Meta* m) { 
-		m->declare("aanl.lib/ADAA1:author", "Dario Sanfilippo");
-		m->declare("aanl.lib/ADAA1:copyright", "Copyright (C) 2021 Dario Sanfilippo     <sanfilippo.dario@gmail.com>");
-		m->declare("aanl.lib/ADAA1:license", "MIT License");
-		m->declare("aanl.lib/hardclip:author", "Dario Sanfilippo");
-		m->declare("aanl.lib/hardclip:copyright", "Copyright (C) 2021 Dario Sanfilippo     <sanfilippo.dario@gmail.com>");
-		m->declare("aanl.lib/hardclip:license", "MIT License");
-		m->declare("aanl.lib/name", "Faust Antialiased Nonlinearities");
-		m->declare("aanl.lib/version", "1.4.2");
-		m->declare("basics.lib/name", "Faust Basic Element Library");
-		m->declare("basics.lib/version", "1.22.0");
 		m->declare("compile_options", "-a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -uim -single -ftz 0");
 		m->declare("delays.lib/name", "Faust Delay Library");
 		m->declare("delays.lib/version", "1.2.0");
 		m->declare("filename", "echo.dsp");
+		m->declare("filters.lib/fir:author", "Julius O. Smith III");
+		m->declare("filters.lib/fir:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/fir:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/iir:author", "Julius O. Smith III");
+		m->declare("filters.lib/iir:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/iir:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/lowpass0_highpass1", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/lowpass0_highpass1:author", "Julius O. Smith III");
+		m->declare("filters.lib/lowpass:author", "Julius O. Smith III");
+		m->declare("filters.lib/lowpass:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/lowpass:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/name", "Faust Filters Library");
+		m->declare("filters.lib/tf2:author", "Julius O. Smith III");
+		m->declare("filters.lib/tf2:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/tf2:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/tf2s:author", "Julius O. Smith III");
+		m->declare("filters.lib/tf2s:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/tf2s:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/version", "1.7.1");
 		m->declare("maths.lib/author", "GRAME");
 		m->declare("maths.lib/copyright", "GRAME");
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.9.0");
-		m->declare("misceffects.lib/echo:author", "Romain Michon");
-		m->declare("misceffects.lib/name", "Misc Effects Library");
-		m->declare("misceffects.lib/version", "2.5.1");
 		m->declare("name", "echo");
 		m->declare("platform.lib/name", "Generic Platform Library");
 		m->declare("platform.lib/version", "1.3.0");
@@ -10386,7 +10401,7 @@ struct mydsp : public dsp {
 		return 1;
 	}
 	virtual int getNumOutputs() {
-		return 1;
+		return 2;
 	}
 	
 	static void classInit(int sample_rate) {
@@ -10395,28 +10410,40 @@ struct mydsp : public dsp {
 	virtual void instanceConstants(int sample_rate) {
 		fSampleRate = sample_rate;
 		fConst0 = std::min<float>(1.92e+05f, std::max<float>(1.0f, static_cast<float>(fSampleRate)));
-		fConst1 = 0.25f * fConst0;
+		fConst1 = std::tan(10995.574f / fConst0);
+		fConst2 = 2.0f * (1.0f - 1.0f / mydsp_faustpower2_f(fConst1));
+		fConst3 = 1.0f / fConst1;
+		fConst4 = (fConst3 + -1.4142135f) / fConst1 + 1.0f;
+		fConst5 = (fConst3 + 1.4142135f) / fConst1 + 1.0f;
+		fConst6 = 1.0f / fConst5;
+		fConst7 = 1.5f / fConst5;
 	}
 	
 	virtual void instanceResetUserInterface() {
-		fHslider0 = static_cast<FAUSTFLOAT>(0.1f);
-		fHslider1 = static_cast<FAUSTFLOAT>(0.4f);
-		fHslider2 = static_cast<FAUSTFLOAT>(1.0f);
+		fHslider0 = static_cast<FAUSTFLOAT>(0.4f);
+		fHslider1 = static_cast<FAUSTFLOAT>(0.3f);
+		fHslider2 = static_cast<FAUSTFLOAT>(0.8f);
 	}
 	
 	virtual void instanceClear() {
-		IOTA0 = 0;
-		for (int l0 = 0; l0 < 2; l0 = l0 + 1) {
+		for (int l0 = 0; l0 < 3; l0 = l0 + 1) {
 			fRec1[l0] = 0.0f;
 		}
 		for (int l1 = 0; l1 < 2; l1 = l1 + 1) {
 			fRec2[l1] = 0.0f;
 		}
-		for (int l2 = 0; l2 < 2; l2 = l2 + 1) {
-			fRec3[l2] = 0.0f;
+		IOTA0 = 0;
+		for (int l2 = 0; l2 < 262144; l2 = l2 + 1) {
+			fVec0[l2] = 0.0f;
 		}
-		for (int l3 = 0; l3 < 65536; l3 = l3 + 1) {
-			fRec0[l3] = 0.0f;
+		for (int l3 = 0; l3 < 2; l3 = l3 + 1) {
+			fRec3[l3] = 0.0f;
+		}
+		for (int l4 = 0; l4 < 2; l4 = l4 + 1) {
+			fRec0[l4] = 0.0f;
+		}
+		for (int l5 = 0; l5 < 2; l5 = l5 + 1) {
+			fRec4[l5] = 0.0f;
 		}
 	}
 	
@@ -10441,31 +10468,45 @@ struct mydsp : public dsp {
 	
 	virtual void buildUserInterface(UI* ui_interface) {
 		ui_interface->openVerticalBox("echo");
-		ui_interface->addHorizontalSlider("duration", &fHslider0, FAUSTFLOAT(0.1f), FAUSTFLOAT(0.0f), FAUSTFLOAT(0.25f), FAUSTFLOAT(0.01f));
-		ui_interface->addHorizontalSlider("feedback coef", &fHslider1, FAUSTFLOAT(0.4f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
-		ui_interface->addHorizontalSlider("gain", &fHslider2, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(7.0f), FAUSTFLOAT(0.01f));
+		ui_interface->declare(&fHslider1, "1", "");
+		ui_interface->declare(&fHslider1, "unit", "s");
+		ui_interface->addHorizontalSlider("Duration (s)", &fHslider1, FAUSTFLOAT(0.3f), FAUSTFLOAT(0.01f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
+		ui_interface->declare(&fHslider0, "2", "");
+		ui_interface->addHorizontalSlider("Feedback Coef", &fHslider0, FAUSTFLOAT(0.4f), FAUSTFLOAT(0.0f), FAUSTFLOAT(0.95f), FAUSTFLOAT(0.01f));
+		ui_interface->declare(&fHslider2, "3", "");
+		ui_interface->addHorizontalSlider("Volume", &fHslider2, FAUSTFLOAT(0.8f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
 		ui_interface->closeBox();
 	}
 	
 	virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
 		FAUSTFLOAT* input0 = inputs[0];
 		FAUSTFLOAT* output0 = outputs[0];
+		FAUSTFLOAT* output1 = outputs[1];
 		float fSlow0 = 0.001f * static_cast<float>(fHslider0);
-		float fSlow1 = 0.001f * static_cast<float>(fHslider1);
+		float fSlow1 = 0.0001f * static_cast<float>(fHslider1);
 		float fSlow2 = 0.001f * static_cast<float>(fHslider2);
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
-			fRec1[0] = fSlow0 + 0.999f * fRec1[1];
-			fRec2[0] = fSlow1 + 0.999f * fRec2[1];
-			fRec3[0] = fSlow2 + 0.999f * fRec3[1];
-			fRec0[IOTA0 & 65535] = static_cast<float>(input0[i0]) * fRec3[0] + fRec2[0] * fRec0[(IOTA0 - (static_cast<int>(std::min<float>(fConst1, std::max<float>(0.0f, fConst0 * fRec1[0]))) + 1)) & 65535];
-			float fTemp0 = fRec0[(IOTA0 - 1) & 65535];
-			float fTemp1 = fRec0[IOTA0 & 65535];
-			float fTemp2 = fTemp1 - fTemp0;
-			output0[i0] = static_cast<FAUSTFLOAT>(((std::fabs(fTemp2) <= 0.001f) ? std::max<float>(-1.0f, std::min<float>(1.0f, 0.5f * (fTemp1 + fTemp0))) : ((((fTemp1 <= 1.0f) & (fTemp1 >= -1.0f)) ? 0.5f * mydsp_faustpower2_f(fTemp1) : fTemp1 * static_cast<float>((fTemp1 > 0.0f) - (fTemp1 < 0.0f)) + -0.5f) - (((fTemp0 <= 1.0f) & (fTemp0 >= -1.0f)) ? 0.5f * mydsp_faustpower2_f(fTemp0) : fTemp0 * static_cast<float>((fTemp0 > 0.0f) - (fTemp0 < 0.0f)) + -0.5f)) / fTemp2));
-			IOTA0 = IOTA0 + 1;
+			fRec1[0] = fRec0[1] - fConst6 * (fConst4 * fRec1[2] + fConst2 * fRec1[1]);
+			fRec2[0] = fSlow0 + 0.999f * fRec2[1];
+			float fTemp0 = static_cast<float>(input0[i0]);
+			float fTemp1 = fTemp0 + 0.6666667f * fRec2[0] * tanhf(fConst7 * (fRec1[2] + fRec1[0] + 2.0f * fRec1[1]));
+			fVec0[IOTA0 & 262143] = fTemp1;
+			fRec3[0] = fSlow1 + 0.9999f * fRec3[1];
+			float fTemp2 = fConst0 * fRec3[0];
+			int iTemp3 = static_cast<int>(fTemp2);
+			float fTemp4 = std::floor(fTemp2);
+			fRec0[0] = fVec0[(IOTA0 - std::min<int>(192001, std::max<int>(0, iTemp3))) & 262143] * (fTemp4 + (1.0f - fTemp2)) + (fTemp2 - fTemp4) * fVec0[(IOTA0 - std::min<int>(192001, std::max<int>(0, iTemp3 + 1))) & 262143];
+			fRec4[0] = fSlow2 + 0.999f * fRec4[1];
+			float fTemp5 = fRec4[0] * (fTemp0 + 0.7f * fRec0[0]);
+			output0[i0] = static_cast<FAUSTFLOAT>(fTemp5);
+			output1[i0] = static_cast<FAUSTFLOAT>(fTemp5);
+			fRec1[2] = fRec1[1];
 			fRec1[1] = fRec1[0];
 			fRec2[1] = fRec2[0];
+			IOTA0 = IOTA0 + 1;
 			fRec3[1] = fRec3[0];
+			fRec0[1] = fRec0[0];
+			fRec4[1] = fRec4[0];
 		}
 	}
 
@@ -10477,18 +10518,18 @@ struct mydsp : public dsp {
 	#define FAUST_CLASS_NAME "mydsp"
 	#define FAUST_COMPILATION_OPIONS "-a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -uim -single -ftz 0"
 	#define FAUST_INPUTS 1
-	#define FAUST_OUTPUTS 1
+	#define FAUST_OUTPUTS 2
 	#define FAUST_ACTIVES 3
 	#define FAUST_PASSIVES 0
 
-	FAUST_ADDHORIZONTALSLIDER("duration", fHslider0, 0.1f, 0.0f, 0.25f, 0.01f);
-	FAUST_ADDHORIZONTALSLIDER("feedback coef", fHslider1, 0.4f, 0.0f, 1.0f, 0.01f);
-	FAUST_ADDHORIZONTALSLIDER("gain", fHslider2, 1.0f, 0.0f, 7.0f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("Duration (s)", fHslider1, 0.3f, 0.01f, 1.0f, 0.001f);
+	FAUST_ADDHORIZONTALSLIDER("Feedback Coef", fHslider0, 0.4f, 0.0f, 0.95f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("Volume", fHslider2, 0.8f, 0.0f, 1.0f, 0.01f);
 
 	#define FAUST_LIST_ACTIVES(p) \
-		p(HORIZONTALSLIDER, duration, "duration", fHslider0, 0.1f, 0.0f, 0.25f, 0.01f) \
-		p(HORIZONTALSLIDER, feedback_coef, "feedback coef", fHslider1, 0.4f, 0.0f, 1.0f, 0.01f) \
-		p(HORIZONTALSLIDER, gain, "gain", fHslider2, 1.0f, 0.0f, 7.0f, 0.01f) \
+		p(HORIZONTALSLIDER, Duration_(s), "Duration (s)", fHslider1, 0.3f, 0.01f, 1.0f, 0.001f) \
+		p(HORIZONTALSLIDER, Feedback_Coef, "Feedback Coef", fHslider0, 0.4f, 0.0f, 0.95f, 0.01f) \
+		p(HORIZONTALSLIDER, Volume, "Volume", fHslider2, 0.8f, 0.0f, 1.0f, 0.01f) \
 
 	#define FAUST_LIST_PASSIVES(p) \
 
