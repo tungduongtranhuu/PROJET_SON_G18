@@ -32,3 +32,13 @@ Créer une pédale avec des effets réglables grâce à une interface graphique,
 
 ## Notes
 (`Ctrl` + $\Uparrow$ + `V` pour afficher la preview de cette page)
+
+
+## Interface
+### Install
+``` bash
+pip install pyserial
+```
+### Launch
+1. Upload le programme `.ino` sur le Teensy
+2. Quand c'est terminé, lancer le programme python de l'interface
