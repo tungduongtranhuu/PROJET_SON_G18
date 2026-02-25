@@ -7,13 +7,24 @@ void setup() {
 void loop() {
   if (Serial.available()) {
     String cmd = Serial.readStringUntil('\n');
-    if (cmd.startsWith("LED=")) {
-      float val = cmd.substring(4).toFloat();
-      if (val < 0.0) val = 0.0;
-      if (val > 0.5) val = 1.0;
 
-      int pwm = val * 255.0;
+    float volume, duration, feedback, drive, tone;
+
+    int parsed = sscanf(cmd.c_str(), "%f,%f,%f,%f,%f",
+                        &volume, &duration, &feedback,
+                        &drive, &tone);
+
+    if (parsed == 5) {
+      int pwm = volume * 255.0;
       analogWrite(13, pwm);
+
+      // Debug
+      Serial.println("Received:");
+      Serial.println(volume);
+      Serial.println(duration);
+      Serial.println(feedback);
+      Serial.println(drive);
+      Serial.println(tone);
     }
   }
 }

@@ -62,8 +62,8 @@ void loop() {
   // =======================
   // ====== MAP VALUES =====
   // =======================
-  float durationMapped = durationVal ;     // 0 → 3
-  float feedbackMapped = feedbackVal ;           // 0 → 1
+  float durationMapped = durationVal ;   
+  float feedbackMapped = feedbackVal ;        
   float gainMapped = gainVal ;
 
   // =======================
