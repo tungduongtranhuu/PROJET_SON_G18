@@ -62,9 +62,9 @@ void loop() {
   // =======================
   // ====== MAP VALUES =====
   // =======================
-  float durationMapped = durationVal ;   
-  float feedbackMapped = feedbackVal ;        
-  float gainMapped = gainVal ;
+  float durationMapped = map(durationVal, 0, 4095, 0.01, 1.0);   
+  float feedbackMapped = map(feedbackVal, 0, 4095, 0.0, 0.95);        
+  float gainMapped = map(gainVal, 0, 4095, 0.0, 1.0);
 
   // =======================
   // == UPDATE DSP SAFELY ==
