@@ -10332,9 +10332,6 @@ struct dsp_poly_factory : public dsp_factory {
 #define RESTRICT __restrict__
 #endif
 
-static float mydsp_faustpower2_f(float value) {
-	return value * value;
-}
 
 struct mydsp : public dsp {
 	
@@ -10342,48 +10339,43 @@ struct mydsp : public dsp {
 	float fConst0;
 	float fConst1;
 	float fConst2;
+	float fRec1[2];
+	FAUSTFLOAT fHslider0;
+	float fRec2[2];
 	float fConst3;
 	float fConst4;
 	float fConst5;
-	float fConst6;
-	float fRec1[3];
-	float fConst7;
-	FAUSTFLOAT fHslider0;
-	float fRec2[2];
-	int IOTA0;
-	float fVec0[262144];
-	FAUSTFLOAT fHslider1;
 	float fRec3[2];
-	float fRec0[2];
-	FAUSTFLOAT fHslider2;
+	int IOTA0;
+	float fVec0[65536];
+	FAUSTFLOAT fHslider1;
 	float fRec4[2];
+	float fRec0[3];
+	FAUSTFLOAT fHslider2;
+	float fRec5[2];
 	
 	mydsp() {
 	}
 	
 	void metadata(Meta* m) { 
+		m->declare("basics.lib/name", "Faust Basic Element Library");
+		m->declare("basics.lib/version", "1.22.0");
 		m->declare("compile_options", "-a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -uim -single -ftz 0");
 		m->declare("delays.lib/name", "Faust Delay Library");
 		m->declare("delays.lib/version", "1.2.0");
 		m->declare("filename", "echo.dsp");
-		m->declare("filters.lib/fir:author", "Julius O. Smith III");
-		m->declare("filters.lib/fir:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
-		m->declare("filters.lib/fir:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/iir:author", "Julius O. Smith III");
-		m->declare("filters.lib/iir:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
-		m->declare("filters.lib/iir:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/lowpass0_highpass1", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/lowpass0_highpass1", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/lowpass0_highpass1:author", "Julius O. Smith III");
 		m->declare("filters.lib/lowpass:author", "Julius O. Smith III");
 		m->declare("filters.lib/lowpass:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/lowpass:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/name", "Faust Filters Library");
-		m->declare("filters.lib/tf2:author", "Julius O. Smith III");
-		m->declare("filters.lib/tf2:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
-		m->declare("filters.lib/tf2:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/tf2s:author", "Julius O. Smith III");
-		m->declare("filters.lib/tf2s:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
-		m->declare("filters.lib/tf2s:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/tf1:author", "Julius O. Smith III");
+		m->declare("filters.lib/tf1:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/tf1:license", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/tf1s:author", "Julius O. Smith III");
+		m->declare("filters.lib/tf1s:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/tf1s:license", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/version", "1.7.1");
 		m->declare("maths.lib/author", "GRAME");
 		m->declare("maths.lib/copyright", "GRAME");
@@ -10410,13 +10402,11 @@ struct mydsp : public dsp {
 	virtual void instanceConstants(int sample_rate) {
 		fSampleRate = sample_rate;
 		fConst0 = std::min<float>(1.92e+05f, std::max<float>(1.0f, static_cast<float>(fSampleRate)));
-		fConst1 = std::tan(10995.574f / fConst0);
-		fConst2 = 2.0f * (1.0f - 1.0f / mydsp_faustpower2_f(fConst1));
-		fConst3 = 1.0f / fConst1;
-		fConst4 = (fConst3 + -1.4142135f) / fConst1 + 1.0f;
-		fConst5 = (fConst3 + 1.4142135f) / fConst1 + 1.0f;
-		fConst6 = 1.0f / fConst5;
-		fConst7 = 1.5f / fConst5;
+		fConst1 = std::exp(-(2e+02f / fConst0));
+		fConst2 = 1.0f - fConst1;
+		fConst3 = 1.0f / std::tan(10995.574f / fConst0);
+		fConst4 = 1.0f - fConst3;
+		fConst5 = 1.0f / (fConst3 + 1.0f);
 	}
 	
 	virtual void instanceResetUserInterface() {
@@ -10426,24 +10416,27 @@ struct mydsp : public dsp {
 	}
 	
 	virtual void instanceClear() {
-		for (int l0 = 0; l0 < 3; l0 = l0 + 1) {
+		for (int l0 = 0; l0 < 2; l0 = l0 + 1) {
 			fRec1[l0] = 0.0f;
 		}
 		for (int l1 = 0; l1 < 2; l1 = l1 + 1) {
 			fRec2[l1] = 0.0f;
 		}
-		IOTA0 = 0;
-		for (int l2 = 0; l2 < 262144; l2 = l2 + 1) {
-			fVec0[l2] = 0.0f;
+		for (int l2 = 0; l2 < 2; l2 = l2 + 1) {
+			fRec3[l2] = 0.0f;
 		}
-		for (int l3 = 0; l3 < 2; l3 = l3 + 1) {
-			fRec3[l3] = 0.0f;
+		IOTA0 = 0;
+		for (int l3 = 0; l3 < 65536; l3 = l3 + 1) {
+			fVec0[l3] = 0.0f;
 		}
 		for (int l4 = 0; l4 < 2; l4 = l4 + 1) {
-			fRec0[l4] = 0.0f;
+			fRec4[l4] = 0.0f;
 		}
-		for (int l5 = 0; l5 < 2; l5 = l5 + 1) {
-			fRec4[l5] = 0.0f;
+		for (int l5 = 0; l5 < 3; l5 = l5 + 1) {
+			fRec0[l5] = 0.0f;
+		}
+		for (int l6 = 0; l6 < 2; l6 = l6 + 1) {
+			fRec5[l6] = 0.0f;
 		}
 	}
 	
@@ -10486,27 +10479,30 @@ struct mydsp : public dsp {
 		float fSlow1 = 0.0001f * static_cast<float>(fHslider1);
 		float fSlow2 = 0.001f * static_cast<float>(fHslider2);
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
-			fRec1[0] = fRec0[1] - fConst6 * (fConst4 * fRec1[2] + fConst2 * fRec1[1]);
-			fRec2[0] = fSlow0 + 0.999f * fRec2[1];
 			float fTemp0 = static_cast<float>(input0[i0]);
-			float fTemp1 = fTemp0 + 0.6666667f * fRec2[0] * tanhf(fConst7 * (fRec1[2] + fRec1[0] + 2.0f * fRec1[1]));
-			fVec0[IOTA0 & 262143] = fTemp1;
-			fRec3[0] = fSlow1 + 0.9999f * fRec3[1];
-			float fTemp2 = fConst0 * fRec3[0];
-			int iTemp3 = static_cast<int>(fTemp2);
-			float fTemp4 = std::floor(fTemp2);
-			fRec0[0] = fVec0[(IOTA0 - std::min<int>(192001, std::max<int>(0, iTemp3))) & 262143] * (fTemp4 + (1.0f - fTemp2)) + (fTemp2 - fTemp4) * fVec0[(IOTA0 - std::min<int>(192001, std::max<int>(0, iTemp3 + 1))) & 262143];
-			fRec4[0] = fSlow2 + 0.999f * fRec4[1];
-			float fTemp5 = fRec4[0] * (fTemp0 + 0.7f * fRec0[0]);
-			output0[i0] = static_cast<FAUSTFLOAT>(fTemp5);
-			output1[i0] = static_cast<FAUSTFLOAT>(fTemp5);
-			fRec1[2] = fRec1[1];
+			fRec1[0] = fConst2 * std::fabs(fTemp0) + fConst1 * fRec1[1];
+			float fTemp1 = fTemp0 * ((fRec1[0] > 0.006f) ? 1.0f : ((fRec1[0] > 0.0018f) ? 238.09525f * (fRec1[0] + -0.0018f) : 0.0f));
+			fRec2[0] = fSlow0 + 0.999f * fRec2[1];
+			fRec3[0] = -(fConst5 * (fConst4 * fRec3[1] - (fRec0[1] + fRec0[2])));
+			float fTemp2 = fRec3[0] * fRec2[0] + fTemp1;
+			fVec0[IOTA0 & 65535] = fTemp2;
+			fRec4[0] = fSlow1 + 0.9999f * fRec4[1];
+			float fTemp3 = fConst0 * fRec4[0];
+			int iTemp4 = static_cast<int>(fTemp3);
+			float fTemp5 = std::floor(fTemp3);
+			fRec0[0] = fVec0[(IOTA0 - std::min<int>(44101, std::max<int>(0, iTemp4))) & 65535] * (fTemp5 + (1.0f - fTemp3)) + (fTemp3 - fTemp5) * fVec0[(IOTA0 - std::min<int>(44101, std::max<int>(0, iTemp4 + 1))) & 65535];
+			fRec5[0] = fSlow2 + 0.999f * fRec5[1];
+			float fTemp6 = 2.0f * fRec5[0] * tanhf(0.5f * (fTemp1 + 0.7f * fRec0[0]));
+			output0[i0] = static_cast<FAUSTFLOAT>(fTemp6);
+			output1[i0] = static_cast<FAUSTFLOAT>(fTemp6);
 			fRec1[1] = fRec1[0];
 			fRec2[1] = fRec2[0];
-			IOTA0 = IOTA0 + 1;
 			fRec3[1] = fRec3[0];
-			fRec0[1] = fRec0[0];
+			IOTA0 = IOTA0 + 1;
 			fRec4[1] = fRec4[0];
+			fRec0[2] = fRec0[1];
+			fRec0[1] = fRec0[0];
+			fRec5[1] = fRec5[0];
 		}
 	}
 
