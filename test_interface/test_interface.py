@@ -4,7 +4,7 @@ import tkinter as tk
 class Interface(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.geometry(f"{700}x{500}")
+        self.geometry(f"{700}x{650}")
         self.title("Effect pedal")   
 
         self.t0 = tk.Label(self, text = "General", font="Serif 10 bold", pady = 20)
@@ -66,6 +66,35 @@ class Interface(tk.Tk):
         self.s22 = tk.Scale(self.row22, from_ = 1500, to = 8000, resolution = 10, length = 400, orient = tk.HORIZONTAL, variable = self.v22, command=self.send_values)
         self.s22.pack(anchor = tk.CENTER)
 
+        self.t3 = tk.Label(self, text = "Chorus", font="Serif 10 bold", pady = 20)
+        self.t3.pack(side = tk.TOP)
+
+        self.row31 = tk.Frame(self)
+        self.row31.pack(fill="x", padx=[20, 50])
+
+        self.st31 = tk.Label(self.row31, text = "Rate", font="Serif 10 bold", pady = 15)
+        self.st31.pack(side = tk.LEFT)
+
+        self.v31 = tk.DoubleVar()
+        self.s31 = tk.Scale(self.row31, from_ = 0.05, to = 5, length = 525, orient = tk.HORIZONTAL, variable = self.v31, command=self.send_values)
+        self.s31.pack(side = tk.RIGHT)
+
+        self.val31 = tk.Label(self.row31, text = "0.05", font="Serif 10 bold", pady = 15)
+        self.val31.pack(side = tk.RIGHT)
+
+        self.row32 = tk.Frame(self)
+        self.row32.pack(fill="x", padx=[20, 50])
+
+        self.st32 = tk.Label(self.row32, text = "Depth", font="Serif 10 bold", pady = 15)
+        self.st32.pack(side = tk.LEFT)
+
+        self.v32 = tk.DoubleVar()
+        self.s32 = tk.Scale(self.row32, from_ = 0.5, to = 10, length = 525, orient = tk.HORIZONTAL, variable = self.v32, command=self.send_values)
+        self.s32.pack(side = tk.RIGHT)
+
+        self.val32 = tk.Label(self.row32, text = "0.5", font="Serif 10 bold", pady = 15)
+        self.val32.pack(side = tk.RIGHT)
+
         self.quitt = tk.Button(self, text="Quit")
         self.quitt.pack(side = tk.BOTTOM, fill='x')
         self.quitt.bind('<Button-1>',self.close)
@@ -78,8 +107,10 @@ class Interface(tk.Tk):
         feedback = self.v12.get()
         drive = self.v21.get()
         tone = self.v22.get()
+        rate = self.v31.get()
+        depth = self.v32.get()
 
-        message = f"{volume},{duration},{feedback},{drive},{tone}\n"
+        message = f"{volume},{duration},{feedback},{drive},{tone},{rate},{depth}\n"
 
         if self.ser.is_open:
             self.ser.write(message.encode())
