@@ -39,7 +39,7 @@ void setup() {
 
   audioShield.enable();
   audioShield.inputSelect(AUDIO_INPUT_LINEIN);
-  audioShield.lineInLevel(12);   // chỉnh gain input nếu cần
+  audioShield.lineInLevel(12);   
   audioShield.volume(0.7);
 
 
@@ -51,17 +51,16 @@ void setup() {
 
 void loop() {
 
-  // Đọc potentiometer (0–1023)
   float driveVal  = analogRead(potDrive)  / 1023.0f;
   float toneVal   = analogRead(potTone)   / 1023.0f;
   float volumeVal = analogRead(potVolume) / 1023.0f;
 
-  // Map về đúng range như trong Faust
+
   float driveMapped  = 1.0f  + driveVal  * (50.0f - 1.0f);
   float toneMapped   = 1500.0f + toneVal * (8000.0f - 1500.0f);
   float volumeMapped = volumeVal; // 0–1
 
-  // Set parameters theo đúng tên trong Faust UI
+ 
   faust.setParamValue("Drive", driveMapped);
   faust.setParamValue("Tone", toneMapped);
   faust.setParamValue("Volume", volumeMapped);
