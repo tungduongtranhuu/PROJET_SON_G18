@@ -9,7 +9,7 @@ tone  = hslider("Tone",  4000, 1500, 8000, 10) : si.smooth(0.999);
 
 
 //Noise gate
-gate_threshold = 0.006;
+gate_threshold = 0.008;
 noise_gate(x) = x * smoothed_open(x)
 with {
     env(x)           = abs(x) : si.smooth(ba.tau2pole(0.005));
