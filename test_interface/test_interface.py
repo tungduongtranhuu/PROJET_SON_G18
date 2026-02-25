@@ -30,7 +30,7 @@ class Interface(tk.Tk):
         self.st11.pack(side = tk.LEFT)
 
         self.v11 = tk.DoubleVar()
-        self.s11 = tk.Scale(self.row11, from_ = 0, to = 1, resolution = 0.01, length = 400, orient = tk.HORIZONTAL, variable = self.v11, command=self.send_values)
+        self.s11 = tk.Scale(self.row11, from_ = 0, to = 0.25, resolution = 0.01, length = 400, orient = tk.HORIZONTAL, variable = self.v11, command=self.send_values)
         self.s11.pack(anchor = tk.CENTER)
 
         self.row12 = tk.Frame(self)
@@ -53,7 +53,7 @@ class Interface(tk.Tk):
         self.st21.pack(side = tk.LEFT)
 
         self.v21 = tk.DoubleVar()
-        self.s21 = tk.Scale(self.row21, from_ = 0, to = 1, resolution = 0.01, length = 400, orient = tk.HORIZONTAL, variable = self.v21, command=self.send_values)
+        self.s21 = tk.Scale(self.row21, from_ = 1, to = 50, resolution = 0.1, length = 400, orient = tk.HORIZONTAL, variable = self.v21, command=self.send_values)
         self.s21.pack(anchor = tk.CENTER)
 
         self.row22 = tk.Frame(self)
@@ -63,7 +63,7 @@ class Interface(tk.Tk):
         self.st22.pack(side = tk.LEFT)
 
         self.v22 = tk.DoubleVar()
-        self.s22 = tk.Scale(self.row22, from_ = 0, to = 1, resolution = 0.01, length = 400, orient = tk.HORIZONTAL, variable = self.v22, command=self.send_values)
+        self.s22 = tk.Scale(self.row22, from_ = 1500, to = 8000, resolution = 10, length = 400, orient = tk.HORIZONTAL, variable = self.v22, command=self.send_values)
         self.s22.pack(anchor = tk.CENTER)
 
         self.quitt = tk.Button(self, text="Quit")
