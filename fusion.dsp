@@ -6,10 +6,13 @@ feedback    = hslider("Feedback Coef",0.4, 0.0,  0.95, 0.01)  : si.smooth(0.999)
 volume      = hslider("Volume",0.8, 0.0,  1.0,  0.01)  : si.smooth(0.999);
 drive = hslider("Drive", 15, 1, 50, 0.1) : si.smooth(0.999);
 tone  = hslider("Tone",  4000, 1500, 8000, 10) : si.smooth(0.999);
+rate  = hslider("Rate[unit:Hz]", 0.8, 0.05, 5, 0.001) : si.smooth(0.999);
+depth = hslider("Depth[unit:ms]", 5.5, 0.5, 10, 0.01) : si.smooth(0.999);
+
 
 
 //Noise gate
-gate_threshold = 0.008;
+gate_threshold = 0.006;
 noise_gate(x) = x * smoothed_open(x)
 with {
     env(x)           = abs(x) : si.smooth(ba.tau2pole(0.005));
@@ -42,8 +45,7 @@ with {
 wet_mix = 0.7;
 
 echo_chain(x) = (x + echo_engine(x) * wet_mix) 
-                  : soft_sat
-                  : *(volume);
+                  : soft_sat;
 
 
 
@@ -130,7 +132,24 @@ distortion_chain =
     : presence_boost
     : hf_noise_filter
     : co.compressor_mono(-6, 8.0, 0.001, 0.08)
-    : *(volume)
     : fi.dcblocker;
 
-process = _ : noise_gate : distortion_chain : echo_chain <: _,_;
+//Chorus process
+mix = 0.5;
+
+baseDelay = 10;
+
+lfo = os.osc(rate);
+
+drift = no.noise : si.smooth(ba.tau2pole(0.5)) * 0.02;
+
+modDelay = baseDelay + depth * (lfo * 0.5) + drift;
+
+delaySamples = modDelay/1000 * ma.SR;
+
+chorus(x) = x
+            : de.delay(44100, delaySamples)
+            : fi.lowpass(1, 6000);   
+
+
+process = _ : noise_gate : distortion_chain : echo_chain : chorus  : *(volume) <: _,_;

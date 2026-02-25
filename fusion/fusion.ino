@@ -32,6 +32,8 @@ const int potTone   = A2;
 const int potVolume = A0;
 const int potDuration = A3;
 const int potFeedback  = A8;
+const int potRate = A9;
+const int potDepth = A10;
 
 // ================= SETUP =================
 
@@ -59,13 +61,17 @@ void loop() {
   float volumeVal = analogRead(potVolume) / 1023.0f;
   float durationVal = analogRead(potDuration);
   float feedbackVal  = analogRead(potFeedback);
-
+  float rateVal = analogRead(potRate) / 1023.0f;
+  float depthVal = analogRead(potDepth) / 1023.0f;
+  
   // Map về đúng range như trong Faust
   float driveMapped  = 1.0f  + driveVal  * (50.0f - 1.0f);
   float toneMapped   = 1500.0f + toneVal * (8000.0f - 1500.0f);
   float volumeMapped = volumeVal; // 0–1
   float durationMapped = (durationVal / 4095.0) * 3.0;     // 0 → 3
   float feedbackMapped = feedbackVal / 4095.0;           // 0 → 1
+  float rateMapped = 0.05f + rateVal * (5.0f - 0.05f);   // 0.05 → 5
+  float depthMapped = 0.5f + depthVal * (10.0f - 0.5f);   // 0.5 → 10
 
   // Set parameters theo đúng tên trong Faust UI
   faust.setParamValue("Drive", driveMapped);
@@ -73,6 +79,8 @@ void loop() {
   faust.setParamValue("Volume", volumeMapped);
   faust.setParamValue("duration", durationMapped);
   faust.setParamValue("feedback coef", feedbackMapped);
+  faust.setParamValue("Rate", rateMapped);
+  faust.setParamValue("Depth", depthMapped);
 
   delay(50);
 }
