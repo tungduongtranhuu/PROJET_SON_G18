@@ -68,18 +68,18 @@ void setup() {
 
 void loop() {
   // Get values from interface
-  //if (Serial.available()) {
-  //  String cmd = Serial.readStringUntil('\n');
-//
-  //  int parsed = sscanf(cmd.c_str(), "%f,%f,%f,%f,%f,%f,%f",
-    //                    &volumeVal, &durationVal, &feedbackVal,
-      //                  &driveVal, &toneVal, &rateVal, &depthVal);
-//
-  //  if (parsed == 7) {
-    //  int pwm = volumeVal * 255.0;
-      //analogWrite(13, pwm);
-    //}
-  //}
+  if (Serial.available()) {
+   String cmd = Serial.readStringUntil('\n');
+
+   int parsed = sscanf(cmd.c_str(), "%f,%f,%f,%f,%f,%f,%f",
+                       &volumeVal, &durationVal, &feedbackVal,
+                       &driveVal, &toneVal, &rateVal, &depthVal);
+
+   if (parsed == 7) {
+     int pwm = volumeVal * 255.0;
+      analogWrite(13, pwm);
+    }
+  }
 
   // Set parameters theo đúng tên trong Faust UI
   faust.setParamValue("Drive", driveVal);
