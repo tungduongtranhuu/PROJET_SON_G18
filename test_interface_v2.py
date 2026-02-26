@@ -124,7 +124,7 @@ class Interface(tk.Tk):
         self.quitt.pack(side = tk.BOTTOM, fill='x')
         self.quitt.bind('<Button-1>',self.close)
 
-        #self.ser = serial.Serial("COM3", 9600)
+        self.ser = serial.Serial("COM3", 9600)
 
     def send_values(self, value):
         self.val0.config(text=f"{float(self.v0.get()):.2f}")
@@ -135,7 +135,7 @@ class Interface(tk.Tk):
         self.val31.config(text=f"{float(self.v31.get()):.2f}")
         self.val32.config(text=f"{float(self.v32.get()):.1f}")
 
-        """volume = self.v0.get()
+        volume = self.v0.get()
         duration = self.v11.get()
         feedback = self.v12.get()
         drive = self.v21.get()
@@ -146,8 +146,8 @@ class Interface(tk.Tk):
         message = f"{volume},{duration},{feedback},{drive},{tone},{rate},{depth}\n"
 
         if self.ser.is_open:
-            self.ser.write(message.encode())"""
-        pass
+            self.ser.write(message.encode())
+
 
     def close(self,event):
         self.destroy()

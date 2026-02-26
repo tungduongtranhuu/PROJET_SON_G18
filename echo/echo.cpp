@@ -10490,7 +10490,7 @@ struct mydsp : public dsp {
 			float fTemp3 = fConst0 * fRec4[0];
 			int iTemp4 = static_cast<int>(fTemp3);
 			float fTemp5 = std::floor(fTemp3);
-			fRec0[0] = fVec0[(IOTA0 - std::min<int>(44101, std::max<int>(0, iTemp4))) & 65535] * (fTemp5 + (1.0f - fTemp3)) + (fTemp3 - fTemp5) * fVec0[(IOTA0 - std::min<int>(44101, std::max<int>(0, iTemp4 + 1))) & 65535];
+			fRec0[0] = fVec0[(IOTA0 - std::min<int>(32769, std::max<int>(0, iTemp4))) & 65535] * (fTemp5 + (1.0f - fTemp3)) + (fTemp3 - fTemp5) * fVec0[(IOTA0 - std::min<int>(32769, std::max<int>(0, iTemp4 + 1))) & 65535];
 			fRec5[0] = fSlow2 + 0.999f * fRec5[1];
 			float fTemp6 = 2.0f * fRec5[0] * tanhf(0.5f * (fTemp1 + 0.7f * fRec0[0]));
 			output0[i0] = static_cast<FAUSTFLOAT>(fTemp6);
