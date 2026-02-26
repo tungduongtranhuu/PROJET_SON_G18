@@ -67,7 +67,6 @@ void setup() {
 // ================= LOOP =================
 
 void loop() {
-  Serial.println("Hello");
   // Get values from interface
   //if (Serial.available()) {
   //  String cmd = Serial.readStringUntil('\n');
@@ -83,13 +82,13 @@ void loop() {
   //}
 
   // Set parameters theo đúng tên trong Faust UI
-  //faust.setParamValue("Drive", driveVal);
-  //faust.setParamValue("Tone", toneVal);
-  //faust.setParamValue("Volume", volumeVal);
-  //faust.setParamValue("duration", durationVal);
-  //faust.setParamValue("feedback coef", feedbackVal);
-  //faust.setParamValue("Rate", rateVal);
-  //faust.setParamValue("Depth", depthVal);
+  faust.setParamValue("Drive", driveVal);
+  faust.setParamValue("Tone", toneVal);
+  faust.setParamValue("Volume", volumeVal);
+  faust.setParamValue("duration", durationVal);
+  faust.setParamValue("feedback coef", feedbackVal);
+  faust.setParamValue("Rate", rateVal);
+  faust.setParamValue("Depth", depthVal);
 
   if ((digitalRead(pinButton) == HIGH) and (lastState == LOW)) { // if button is pressed
     effectActive = (effectActive + 1)%2;

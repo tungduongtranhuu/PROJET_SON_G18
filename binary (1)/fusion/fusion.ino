@@ -101,7 +101,7 @@ void loop() {
     lastState = LOW;
   }
 
-  if (effectActive) {
+  if (effectActive) {c
     mixer.gain(0, 1.0); // effet ON
     mixer.gain(1, 0.0);
   }
