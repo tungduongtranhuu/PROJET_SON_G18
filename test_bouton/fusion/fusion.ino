@@ -69,11 +69,11 @@ void setup() {
 void loop() {
   if ((digitalRead(pinButton) == HIGH) and (lastState == LOW)) { // if button is pressed
     effectActive = (effectActive + 1)%2;
-    //Serial.println("Button");
-    //Serial.println(digitalRead(pinButton));
+    Serial.println("Button");
+    Serial.println(digitalRead(pinButton));
     lastState = HIGH;
   }
-  //else if (digitalRead(pinButton) == LOW) {Serial.println("No"); Serial.println(digitalRead(pinButton));}
+  else if (digitalRead(pinButton) == LOW) {Serial.println("No"); Serial.println(digitalRead(pinButton));}
 
   if ((digitalRead(pinButton) == LOW) and (lastState == HIGH)) {
     lastState = LOW;

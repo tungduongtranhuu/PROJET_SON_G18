@@ -20,7 +20,8 @@ class Interface(tk.Tk):
         self.st0.pack(side = tk.LEFT)
 
         self.v0 = tk.DoubleVar()
-        self.s0 = ttk.Scale(self.row0, from_ = 0, to = 1, length = 525, orient = tk.HORIZONTAL, variable = self.v0, command=self.send_values)
+        self.s0 = ttk.Scale(self.row0, from_ = 0, to = 1, length = 525, orient = tk.HORIZONTAL, variable = self.v0)
+        self.s0.bind("<ButtonRelease-1>", self.send_values)
         self.s0.pack(side = tk.RIGHT)
 
         self.val0 = ttk.Label(self.row0, text = "0.00", font="Serif 10 bold", padding = 15)
@@ -36,7 +37,8 @@ class Interface(tk.Tk):
         self.st11.pack(side = tk.LEFT)
 
         self.v11 = tk.DoubleVar()
-        self.s11 = ttk.Scale(self.row11, from_ = 0, to = 0.25, length = 525, orient = tk.HORIZONTAL, variable = self.v11, command=self.send_values)
+        self.s11 = ttk.Scale(self.row11, from_ = 0, to = 0.25, length = 525, orient = tk.HORIZONTAL, variable = self.v11)
+        self.s11.bind("<ButtonRelease-1>", self.send_values)
         self.s11.pack(side = tk.RIGHT)
 
         self.val11 = ttk.Label(self.row11, text = "0.00", font="Serif 10 bold", padding = 15)
@@ -49,7 +51,8 @@ class Interface(tk.Tk):
         self.st12.pack(side = tk.LEFT)
 
         self.v12 = tk.DoubleVar()
-        self.s12 = ttk.Scale(self.row12, from_ = 0, to = 1, length = 525, orient = tk.HORIZONTAL, variable = self.v12, command=self.send_values)
+        self.s12 = ttk.Scale(self.row12, from_ = 0, to = 0.95, length = 525, orient = tk.HORIZONTAL, variable = self.v12)
+        self.s12.bind("<ButtonRelease-1>", self.send_values)
         self.s12.pack(side = tk.RIGHT)
 
         self.val12 = ttk.Label(self.row12, text = "0.00", font="Serif 10 bold", padding = 15)
@@ -65,7 +68,8 @@ class Interface(tk.Tk):
         self.st21.pack(side = tk.LEFT)
 
         self.v21 = tk.DoubleVar()
-        self.s21 = ttk.Scale(self.row21, from_ = 1, to = 50, length = 525, orient = tk.HORIZONTAL, variable = self.v21, command=self.send_values)
+        self.s21 = ttk.Scale(self.row21, from_ = 1, to = 50, length = 525, orient = tk.HORIZONTAL, variable = self.v21)
+        self.s21.bind("<ButtonRelease-1>", self.send_values)
         self.s21.pack(side = tk.RIGHT)
 
         self.val21 = ttk.Label(self.row21, text = "1.0", font="Serif 10 bold", padding = 15)
@@ -78,7 +82,8 @@ class Interface(tk.Tk):
         self.st22.pack(side = tk.LEFT)
 
         self.v22 = tk.DoubleVar()
-        self.s22 = ttk.Scale(self.row22, from_ = 1500, to = 8000, length = 525, orient = tk.HORIZONTAL, variable = self.v22, command=self.send_values)
+        self.s22 = ttk.Scale(self.row22, from_ = 1500, to = 8000, length = 525, orient = tk.HORIZONTAL, variable = self.v22)
+        self.s22.bind("<ButtonRelease-1>", self.send_values)
         self.s22.pack(side = tk.RIGHT)
 
         self.val22 = ttk.Label(self.row22, text = "1500", font="Serif 10 bold", padding = 15)
@@ -94,7 +99,8 @@ class Interface(tk.Tk):
         self.st31.pack(side = tk.LEFT)
 
         self.v31 = tk.DoubleVar()
-        self.s31 = ttk.Scale(self.row31, from_ = 0.05, to = 5, length = 525, orient = tk.HORIZONTAL, variable = self.v31, command=self.send_values)
+        self.s31 = ttk.Scale(self.row31, from_ = 0.05, to = 5, length = 525, orient = tk.HORIZONTAL, variable = self.v31)
+        self.s31.bind("<ButtonRelease-1>", self.send_values)
         self.s31.pack(side = tk.RIGHT)
 
         self.val31 = ttk.Label(self.row31, text = "0.05", font="Serif 10 bold", padding = 15)
@@ -107,7 +113,8 @@ class Interface(tk.Tk):
         self.st32.pack(side = tk.LEFT)
 
         self.v32 = tk.DoubleVar()
-        self.s32 = ttk.Scale(self.row32, from_ = 0.5, to = 10, length = 525, orient = tk.HORIZONTAL, variable = self.v32, command=self.send_values)
+        self.s32 = ttk.Scale(self.row32, from_ = 0.5, to = 10, length = 525, orient = tk.HORIZONTAL, variable = self.v32)
+        self.s32.bind("<ButtonRelease-1>", self.send_values)
         self.s32.pack(side = tk.RIGHT)
 
         self.val32 = ttk.Label(self.row32, text = "0.5", font="Serif 10 bold", padding = 15)
@@ -117,7 +124,7 @@ class Interface(tk.Tk):
         self.quitt.pack(side = tk.BOTTOM, fill='x')
         self.quitt.bind('<Button-1>',self.close)
 
-        self.ser = serial.Serial("COM3", 9600)
+        #self.ser = serial.Serial("COM3", 9600)
 
     def send_values(self, value):
         self.val0.config(text=f"{float(self.v0.get()):.2f}")
@@ -127,7 +134,8 @@ class Interface(tk.Tk):
         self.val22.config(text=f"{float(self.v22.get()):.0f}")
         self.val31.config(text=f"{float(self.v31.get()):.2f}")
         self.val32.config(text=f"{float(self.v32.get()):.1f}")
-        volume = self.v0.get()
+
+        """volume = self.v0.get()
         duration = self.v11.get()
         feedback = self.v12.get()
         drive = self.v21.get()
@@ -138,7 +146,8 @@ class Interface(tk.Tk):
         message = f"{volume},{duration},{feedback},{drive},{tone},{rate},{depth}\n"
 
         if self.ser.is_open:
-            self.ser.write(message.encode())
+            self.ser.write(message.encode())"""
+        pass
 
     def close(self,event):
         self.destroy()

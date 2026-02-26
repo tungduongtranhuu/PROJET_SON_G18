@@ -34,8 +34,8 @@ AudioConnection patchCord5(mixer, 0, audioOutput, 1); // Right out
 // ================= VARIABLES =================
 
 float volumeVal = 0.0;
-float durationVal = 0.0;
-float feedbackVal = 0.0;
+//float durationVal = 0.0;
+//float feedbackVal = 0.0;
 float driveVal = 1.0;
 float toneVal = 1500.0;
 float rateVal = 0.05;
@@ -67,7 +67,6 @@ void setup() {
 // ================= LOOP =================
 
 void loop() {
-  Serial.println("Hello");
   // Get values from interface
   //if (Serial.available()) {
   //  String cmd = Serial.readStringUntil('\n');
@@ -83,20 +82,20 @@ void loop() {
   //}
 
   // Set parameters theo đúng tên trong Faust UI
-  //faust.setParamValue("Drive", driveVal);
-  //faust.setParamValue("Tone", toneVal);
-  //faust.setParamValue("Volume", volumeVal);
+  faust.setParamValue("Drive", driveVal);
+  faust.setParamValue("Tone", toneVal);
+  faust.setParamValue("Volume", volumeVal);
   //faust.setParamValue("duration", durationVal);
   //faust.setParamValue("feedback coef", feedbackVal);
-  //faust.setParamValue("Rate", rateVal);
-  //faust.setParamValue("Depth", depthVal);
+  faust.setParamValue("Rate", rateVal);
+  faust.setParamValue("Depth", depthVal);
 
   if ((digitalRead(pinButton) == HIGH) and (lastState == LOW)) { // if button is pressed
     effectActive = (effectActive + 1)%2;
     lastState = HIGH;
     Serial.println("button");
   }
-  else {Serial.println("no"); }
+  else if (digitalRead(pinButton) == LOW) {Serial.println("no"); }
 
   if ((digitalRead(pinButton) == LOW) and (lastState == HIGH)) {
     lastState = LOW;
